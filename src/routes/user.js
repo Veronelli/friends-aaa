@@ -13,6 +13,11 @@ app.get("/", (req, res) => {
   res.json({ message: "Ok" });
 });
 
+app.get("/user", async (req, res) => {
+  const users = await User.findAll();
+  res.json(users);
+});
+
 app.post("/user", async (req, res) => {
   const user = req.body;
   await User.create(user);
@@ -20,9 +25,12 @@ app.post("/user", async (req, res) => {
   res.json({ message: "User created" }).status(200);
 });
 
-app.get("/user", async (req, res) => {
-  const users = await User.findAll();
-  res.json(users);
+app.put("/user/:id", async (req, res) => {
+  const user = req.body;
+  const { id } = req.params;
+
+  await User.update(user, { where: { id } });
+  res.json({ message: "User updated" });
 });
 
 module.exports = app;

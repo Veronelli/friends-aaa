@@ -5,7 +5,7 @@ const sequelize = require("../../mysql");
 sequelize.sync();
 
 const User = sequelize.define(
-  "Frinds",
+  "friend",
   {
     firstName: {
       type: DataTypes.STRING,
@@ -32,5 +32,7 @@ const User = sequelize.define(
     // your other configuration here
   }
 );
-
+User.beforeCreate(function (user) {
+  user.password = bcrypt.hashSync(user.password, 8);
+});
 module.exports = User;
