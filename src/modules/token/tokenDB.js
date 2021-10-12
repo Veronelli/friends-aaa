@@ -1,10 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../mysql");
 
-sequelize.sync();
-
 const Token = sequelize.define(
-  "Tokens",
+  "tokens",
   {
     token: {
       type: DataTypes.STRING,
@@ -16,3 +14,5 @@ const Token = sequelize.define(
     updateAt: false,
   }
 );
+
+module.exports = Token;

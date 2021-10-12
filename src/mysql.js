@@ -14,4 +14,5 @@ sequelize
     console.log("No se conecto");
   });
 
+sequelize.sync({ force: false });
 module.exports = sequelize;

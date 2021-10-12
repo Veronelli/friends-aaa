@@ -1,6 +1,17 @@
 const bcryptjs = require("bcryptjs");
 const express = require("express");
 
-const app = require("./routes/user");
+const Token = require("./modules/token/tokenDB");
+const User = require("./modules/user/userDB");
+const UserRouter = require("./routes/user");
+const TokenRouter = require("./routes/token");
 
-app.listen(4000, console.log(4000));
+const app = express();
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.use(TokenRouter);
+app.use(UserRouter);
+
+app.listen(3000, console.log(3000));
