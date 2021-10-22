@@ -45,25 +45,24 @@ User.login = async function (user) {
   const a = await User.findOne({
     where: { firstName: user.firstName },
   });
-  console.log(user);
   if (bcrypt.compare(user.password, a.password)) {
     const token = {};
     token.token = jwt.sign({ id: a.id }, "AAA", { expiresIn: 60 * 60 * 24 });
-    token.friendId = a.id;
+    token.userId = a.id;
     await Token.create(token);
     return token.token;
   }
 };
 
 User.belongsToMany(User, {
-  as: "child",
+  as: "User1",
   through: "friendss",
-  foreignKey: "id_user_a",
+  foreignKey: "friend",
 });
 User.belongsToMany(User, {
-  as: "parents",
+  as: "User2",
   through: "friendss",
-  foreignKey: "id_user_b",
+  foreignKey: "of",
 });
 
 module.exports = User;
