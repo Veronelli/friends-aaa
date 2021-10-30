@@ -7,6 +7,8 @@ const User = require("../modules/user/userDB");
 const Token = require("../modules/token/tokenDB");
 const auth = require("../midleware/auth");
 
+const upload = require("../multer/avatarUser");
+
 const app = express();
 
 const route = express.Router();
@@ -66,6 +68,9 @@ route.post("/user", async (req, res) => {
   const user = req.body;
   console.log(user);
   await User.create(user);
+  if (req.file) {
+    user.avantar = "./avatar/" + req.file.filename;
+  }
 
   res.json({ message: "User created" }).status(200);
 });
@@ -83,5 +88,14 @@ route.put("/user/:id", async (req, res) => {
 
   res.json({ message: "User updated" });
 });
-
+route.put("/avatar", upload.single("avatar"), auth, async (req, res) => {
+  let user = await User.findByPk(req.user.id);
+  let userUpdate = {
+    ...user.dataValues,
+    avatar: "./avatar/" + req.file.filename,
+  };
+  await User.update(userUpdate, { where: { id: userUpdate.id } });
+  console.log(userUpdate);
+  res.json({ message: "avater seted" });
+});
 module.exports = route;

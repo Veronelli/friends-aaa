@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-const sequelize = require("../../mysql");
+const sequelize = require("../../sequelize");
 const Token = require("../token/tokenDB");
 
 const User = sequelize.define(
@@ -11,8 +11,12 @@ const User = sequelize.define(
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     lastName: {
+      type: DataTypes.STRING,
+    },
+    avatar: {
       type: DataTypes.STRING,
     },
     password: {

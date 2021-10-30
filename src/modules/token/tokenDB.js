@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../../mysql");
+const sequelize = require("../../sequelize");
 
 const Token = sequelize.define(
   "tokens",
